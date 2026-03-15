@@ -13,46 +13,54 @@
 #progress-bar {transition: width 0.5s ease;}
 
 /* Confetti simples */
-.confetti {position:absolute;pointer-events:none;width:10px;height:10px;background-color:yellow;animation:fall 1s linear forwards;}
+.confetti {
+  position:absolute;
+  pointer-events:none;
+  width:10px;
+  height:10px;
+  background-color:yellow;
+  animation:fall 1s linear forwards;
+  border-radius:50%;
+}
 @keyframes fall {0%{transform:translateY(0)}100%{transform:translateY(300px);opacity:0}}
 </style>
 </head>
-<body class="bg-gradient-to-br from-blue-200 to-purple-200 min-h-screen flex flex-col items-center p-8 relative">
+<body class="bg-gradient-to-br from-blue-200 to-purple-200 min-h-screen flex flex-col items-center p-4 sm:p-8 relative">
 
-<h1 class="text-4xl font-bold mb-6">⭐ Quadro de Comportamento</h1>
-<p class="mb-10 text-lg">Ganhem estrelas para merecer o passeio!</p>
+<h1 class="text-3xl sm:text-4xl font-bold mb-4 sm:mb-6 text-center">⭐ Quadro de Comportamento</h1>
+<p class="mb-6 sm:mb-10 text-center text-lg">Ganhem estrelas para merecer o passeio!</p>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-4xl">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-10 w-full max-w-4xl">
 
   <!-- Criança 1 -->
-  <div class="bg-white rounded-2xl shadow-xl p-6 text-center">
-    <h2 id="name1" class="text-2xl font-bold mb-4">Criança 1</h2>
-    <div id="stars1" class="flex justify-center gap-2 mb-3 text-3xl"></div>
-    <div class="w-full bg-gray-200 h-4 rounded mb-4">
+  <div class="bg-white rounded-2xl shadow-xl p-4 sm:p-6 text-center flex flex-col items-center">
+    <h2 id="name1" class="text-2xl sm:text-2xl font-bold mb-3">Criança 1</h2>
+    <div id="stars1" class="flex justify-center gap-1 sm:gap-2 mb-2 text-3xl"></div>
+    <div class="w-full bg-gray-200 h-4 rounded mb-3">
       <div id="progress1" class="bg-green-500 h-4 rounded" style="width:0%"></div>
     </div>
-    <button onclick="addStar(1)" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl admin-only hidden">+ ⭐</button>
+    <button onclick="addStar(1)" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl admin-only hidden w-40 sm:w-48 mt-2">+ ⭐</button>
   </div>
 
   <!-- Criança 2 -->
-  <div class="bg-white rounded-2xl shadow-xl p-6 text-center">
-    <h2 id="name2" class="text-2xl font-bold mb-4">Criança 2</h2>
-    <div id="stars2" class="flex justify-center gap-2 mb-3 text-3xl"></div>
-    <div class="w-full bg-gray-200 h-4 rounded mb-4">
+  <div class="bg-white rounded-2xl shadow-xl p-4 sm:p-6 text-center flex flex-col items-center">
+    <h2 id="name2" class="text-2xl sm:text-2xl font-bold mb-3">Criança 2</h2>
+    <div id="stars2" class="flex justify-center gap-1 sm:gap-2 mb-2 text-3xl"></div>
+    <div class="w-full bg-gray-200 h-4 rounded mb-3">
       <div id="progress2" class="bg-green-500 h-4 rounded" style="width:0%"></div>
     </div>
-    <button onclick="addStar(2)" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl admin-only hidden">+ ⭐</button>
+    <button onclick="addStar(2)" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl admin-only hidden w-40 sm:w-48 mt-2">+ ⭐</button>
   </div>
 
 </div>
 
-<div id="reward" class="hidden mt-12 text-3xl font-bold text-yellow-600">🎉 Passeio desbloqueado!</div>
+<div id="reward" class="hidden mt-8 sm:mt-12 text-3xl sm:text-4xl font-bold text-yellow-600 text-center">🎉 Passeio desbloqueado!</div>
 
-<button onclick="toggleAdmin()" class="mt-10 text-sm text-gray-600 underline">Admin</button>
+<button onclick="toggleAdmin()" class="mt-6 text-sm text-gray-600 underline">Admin</button>
 
-<div id="adminPanel" class="hidden mt-6 bg-white p-6 rounded-xl shadow w-80">
+<div id="adminPanel" class="hidden mt-4 sm:mt-6 bg-white p-4 sm:p-6 rounded-xl shadow w-full sm:w-80 mx-auto">
 
-  <h3 class="text-xl font-bold mb-4">Admin</h3>
+  <h3 class="text-xl font-bold mb-3">Admin</h3>
 
   <div id="loginArea">
     <input id="adminPass" type="password" placeholder="Password" class="border p-2 w-full mb-3 rounded">
@@ -60,7 +68,6 @@
   </div>
 
   <div id="controls" class="hidden">
-    <button onclick="logout()" class="bg-gray-600 text-white px-4 py-2 rounded w-full mt-3">Logout</button>
     <label class="text-sm">Nome Criança 1</label>
     <input id="child1Input" type="text" class="border p-2 w-full mb-3 rounded">
 
@@ -70,15 +77,16 @@
     <button onclick="updateNames()" class="bg-indigo-500 text-white px-4 py-2 rounded w-full mb-3">Atualizar nomes</button>
 
     <div class="flex justify-between mb-3">
-      <button onclick="removeStar(1)" class="bg-red-400 text-white px-3 py-1 rounded">- ⭐ Criança 1</button>
-      <button onclick="removeStar(2)" class="bg-red-400 text-white px-3 py-1 rounded">- ⭐ Criança 2</button>
+      <button onclick="removeStar(1)" class="bg-red-400 text-white px-3 py-1 rounded w-1/2 mr-2">- ⭐ Criança 1</button>
+      <button onclick="removeStar(2)" class="bg-red-400 text-white px-3 py-1 rounded w-1/2 ml-2">- ⭐ Criança 2</button>
     </div>
 
     <label class="text-sm">Estrelas para passeio</label>
     <input id="neededStars" type="number" class="border p-2 w-full mb-3 rounded">
     <button onclick="updateGoal()" class="bg-purple-500 text-white px-4 py-2 rounded w-full mb-3">Atualizar objetivo</button>
 
-    <button onclick="resetBoard()" class="bg-red-600 text-white px-4 py-2 rounded w-full">Reset semana</button>
+    <button onclick="resetBoard()" class="bg-red-600 text-white px-4 py-2 rounded w-full mb-2">Reset semana</button>
+    <button onclick="logout()" class="bg-gray-600 text-white px-4 py-2 rounded w-full">Logout</button>
   </div>
 </div>
 
@@ -87,7 +95,7 @@ let stars1, stars2, child1, child2, neededStars
 let isAdmin = false
 const ADMIN_PASSWORD = "1234"
 
-// --- Funções de Backend ---
+// --- Funções Backend ---
 async function loadData(){
   const res = await fetch("/data")
   const data = await res.json()
@@ -101,21 +109,6 @@ async function loadData(){
   document.getElementById("child1Input").value = child1
   document.getElementById("child2Input").value = child2
   render()
-}
-
-function logout(){
-  // Esconde controles
-  document.getElementById("controls").classList.add("hidden")
-  document.getElementById("loginArea").classList.remove("hidden")
-
-  // Esconde botões de + estrela
-  document.querySelectorAll(".admin-only").forEach(b => b.classList.add("hidden"))
-
-  // Marca admin como desconectado
-  isAdmin = false
-
-  // Limpa a password
-  document.getElementById("adminPass").value = ""
 }
 
 async function saveData(){
@@ -154,20 +147,10 @@ function render(){
 
 // --- Funções admin e estrelas ---
 async function addStar(child){
-  if(!isAdmin){
-    alert("Apenas o admin pode adicionar estrelas!")
-    return
-  }
+  if(!isAdmin){alert("Apenas o admin pode adicionar estrelas!"); return}
+  if(child === 1 && stars1 >= neededStars){ alert(child1 + " já atingiu o limite!"); return }
+  if(child === 2 && stars2 >= neededStars){ alert(child2 + " já atingiu o limite!"); return }
 
-  // Limitar ao número máximo de estrelas
-  if(child === 1 && stars1 >= neededStars){
-    return
-  }
-  if(child === 2 && stars2 >= neededStars){
-    return
-  }
-
-  // Adiciona estrela
   if(child===1) stars1++
   if(child===2) stars2++
 
@@ -201,19 +184,25 @@ async function resetBoard(){
   render()
 }
 
-// --- Admin login ---
+// --- Admin login/logout ---
 function toggleAdmin(){document.getElementById("adminPanel").classList.toggle("hidden")}
+
 function login(){
   const pass = document.getElementById("adminPass").value
   if(pass===ADMIN_PASSWORD){
     document.getElementById("loginArea").classList.add("hidden")
     document.getElementById("controls").classList.remove("hidden")
     isAdmin = true
-    // Mostrar botões de + estrela
     document.querySelectorAll(".admin-only").forEach(b=>b.classList.remove("hidden"))
-  } else {
-    alert("Password errada")
-  }
+  } else { alert("Password errada") }
+}
+
+function logout(){
+  document.getElementById("controls").classList.add("hidden")
+  document.getElementById("loginArea").classList.remove("hidden")
+  document.querySelectorAll(".admin-only").forEach(b => b.classList.add("hidden"))
+  isAdmin = false
+  document.getElementById("adminPass").value=""
 }
 
 // --- Confetti ---
