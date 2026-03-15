@@ -1,149 +1,235 @@
 <!DOCTYPE html>
 <html lang="pt">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Quadro de Comportamento</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .star {
-            animation: pop .4s ease
-        }
+<meta charset="UTF-8">
+<title>Quadro de Comportamento</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+/* Animação estrelas */
+.star {animation:pop .4s ease}
+@keyframes pop{0%{transform:scale(.3);opacity:0}80%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
 
-        @keyframes pop {
-            0% {
-                transform: scale(.3);
-                opacity: 0
-            }
+/* Barra de progresso */
+#progress-bar {transition: width 0.5s ease;}
 
-            80% {
-                transform: scale(1.2)
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 1
-            }
-        }
-
-        .reward {
-            animation: bounce 1s infinite
-        }
-    </style>
+/* Confetti simples */
+.confetti {position:absolute;pointer-events:none;width:10px;height:10px;background-color:yellow;animation:fall 1s linear forwards;}
+@keyframes fall {0%{transform:translateY(0)}100%{transform:translateY(300px);opacity:0}}
+</style>
 </head>
+<body class="bg-gradient-to-br from-blue-200 to-purple-200 min-h-screen flex flex-col items-center p-8 relative">
 
-<body class="bg-gradient-to-br from-blue-200 to-purple-200 min-h-screen flex flex-col items-center p-8">
+<h1 class="text-4xl font-bold mb-6">⭐ Quadro de Comportamento</h1>
+<p class="mb-10 text-lg">Ganhem estrelas para merecer o passeio!</p>
 
-    <h1 class="text-4xl font-bold mb-6">⭐ Quadro de Comportamento</h1>
-    <p class="mb-10 text-lg">Ganhem estrelas para merecer o passeio!</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-4xl">
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-4xl">
+  <!-- Criança 1 -->
+  <div class="bg-white rounded-2xl shadow-xl p-6 text-center">
+    <h2 id="name1" class="text-2xl font-bold mb-4">Criança 1</h2>
+    <div id="stars1" class="flex justify-center gap-2 mb-3 text-3xl"></div>
+    <div class="w-full bg-gray-200 h-4 rounded mb-4">
+      <div id="progress1" class="bg-green-500 h-4 rounded" style="width:0%"></div>
+    </div>
+    <button onclick="addStar(1)" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl admin-only hidden">+ ⭐</button>
+  </div>
 
-        <div class="bg-white rounded-2xl shadow-xl p-6 text-center">
-            <h2 id="name1" class="text-2xl font-bold mb-4">Criança 1</h2>
-            <div id="stars1" class="flex justify-center gap-2 mb-6 text-3xl"></div>
-            <button onclick="addStar(1)" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl">+
-                ⭐</button>
-        </div>
+  <!-- Criança 2 -->
+  <div class="bg-white rounded-2xl shadow-xl p-6 text-center">
+    <h2 id="name2" class="text-2xl font-bold mb-4">Criança 2</h2>
+    <div id="stars2" class="flex justify-center gap-2 mb-3 text-3xl"></div>
+    <div class="w-full bg-gray-200 h-4 rounded mb-4">
+      <div id="progress2" class="bg-green-500 h-4 rounded" style="width:0%"></div>
+    </div>
+    <button onclick="addStar(2)" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl admin-only hidden">+ ⭐</button>
+  </div>
 
-        <div class="bg-white rounded-2xl shadow-xl p-6 text-center">
-            <h2 id="name2" class="text-2xl font-bold mb-4">Criança 2</h2>
-            <div id="stars2" class="flex justify-center gap-2 mb-6 text-3xl"></div>
-            <button onclick="addStar(2)" class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-xl">+
-                ⭐</button>
-        </div>
+</div>
 
+<div id="reward" class="hidden mt-12 text-3xl font-bold text-yellow-600">🎉 Passeio desbloqueado!</div>
+
+<button onclick="toggleAdmin()" class="mt-10 text-sm text-gray-600 underline">Admin</button>
+
+<div id="adminPanel" class="hidden mt-6 bg-white p-6 rounded-xl shadow w-80">
+
+  <h3 class="text-xl font-bold mb-4">Admin</h3>
+
+  <div id="loginArea">
+    <input id="adminPass" type="password" placeholder="Password" class="border p-2 w-full mb-3 rounded">
+    <button onclick="login()" class="bg-blue-500 text-white px-4 py-2 rounded w-full">Login</button>
+  </div>
+
+  <div id="controls" class="hidden">
+    <button onclick="logout()" class="bg-gray-600 text-white px-4 py-2 rounded w-full mt-3">Logout</button>
+    <label class="text-sm">Nome Criança 1</label>
+    <input id="child1Input" type="text" class="border p-2 w-full mb-3 rounded">
+
+    <label class="text-sm">Nome Criança 2</label>
+    <input id="child2Input" type="text" class="border p-2 w-full mb-3 rounded">
+
+    <button onclick="updateNames()" class="bg-indigo-500 text-white px-4 py-2 rounded w-full mb-3">Atualizar nomes</button>
+
+    <div class="flex justify-between mb-3">
+      <button onclick="removeStar(1)" class="bg-red-400 text-white px-3 py-1 rounded">- ⭐ Criança 1</button>
+      <button onclick="removeStar(2)" class="bg-red-400 text-white px-3 py-1 rounded">- ⭐ Criança 2</button>
     </div>
 
-    <div id="reward" class="hidden mt-12 text-3xl font-bold text-yellow-600 reward">🎉 Passeio desbloqueado!</div>
+    <label class="text-sm">Estrelas para passeio</label>
+    <input id="neededStars" type="number" class="border p-2 w-full mb-3 rounded">
+    <button onclick="updateGoal()" class="bg-purple-500 text-white px-4 py-2 rounded w-full mb-3">Atualizar objetivo</button>
 
-    <button onclick="toggleAdmin()" class="mt-10 text-sm text-gray-600 underline">Admin</button>
+    <button onclick="resetBoard()" class="bg-red-600 text-white px-4 py-2 rounded w-full">Reset semana</button>
+  </div>
+</div>
 
-    <div id="adminPanel" class="hidden mt-6 bg-white p-6 rounded-xl shadow w-80">
-        <h3 class="text-xl font-bold mb-4">Admin</h3>
+<script>
+let stars1, stars2, child1, child2, neededStars
+let isAdmin = false
+const ADMIN_PASSWORD = "1234"
 
-        <div id="loginArea">
-            <input id="adminPass" type="password" placeholder="Password" class="border p-2 w-full mb-3 rounded">
-            <button onclick="login()" class="bg-blue-500 text-white px-4 py-2 rounded w-full">Login</button>
-        </div>
+// --- Funções de Backend ---
+async function loadData(){
+  const res = await fetch("/data")
+  const data = await res.json()
+  stars1 = data.stars1
+  stars2 = data.stars2
+  child1 = data.child1
+  child2 = data.child2
+  neededStars = data.neededStars
 
-        <div id="controls" class="hidden">
-            <label class="text-sm">Nome Criança 1</label>
-            <input id="child1Input" type="text" class="border p-2 w-full mb-3 rounded">
+  document.getElementById("neededStars").value = neededStars
+  document.getElementById("child1Input").value = child1
+  document.getElementById("child2Input").value = child2
+  render()
+}
 
-            <label class="text-sm">Nome Criança 2</label>
-            <input id="child2Input" type="text" class="border p-2 w-full mb-3 rounded">
+function logout(){
+  // Esconde controles
+  document.getElementById("controls").classList.add("hidden")
+  document.getElementById("loginArea").classList.remove("hidden")
 
-            <button onclick="updateNames()" class="bg-indigo-500 text-white px-4 py-2 rounded w-full mb-3">Atualizar
-                nomes</button>
+  // Esconde botões de + estrela
+  document.querySelectorAll(".admin-only").forEach(b => b.classList.add("hidden"))
 
-            <div class="flex justify-between mb-3">
-                <button onclick="removeStar(1)" class="bg-red-400 text-white px-3 py-1 rounded">- ⭐ Criança 1</button>
-                <button onclick="removeStar(2)" class="bg-red-400 text-white px-3 py-1 rounded">- ⭐ Criança 2</button>
-            </div>
+  // Marca admin como desconectado
+  isAdmin = false
 
-            <label class="text-sm">Estrelas para passeio</label>
-            <input id="neededStars" type="number" class="border p-2 w-full mb-3 rounded">
-            <button onclick="updateGoal()" class="bg-purple-500 text-white px-4 py-2 rounded w-full mb-3">Atualizar
-                objetivo</button>
+  // Limpa a password
+  document.getElementById("adminPass").value = ""
+}
 
-            <button onclick="resetBoard()" class="bg-red-600 text-white px-4 py-2 rounded w-full">Reset semana</button>
-        </div>
-    </div>
+async function saveData(){
+  await fetch("/data",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({child1, child2, stars1, stars2, neededStars})
+  })
+}
 
-    <script>
-        let stars1, stars2, child1, child2, neededStars
+// --- Renderização ---
+function render(){
+  // Estrelas
+  document.getElementById("stars1").innerHTML=""
+  document.getElementById("stars2").innerHTML=""
+  for(let i=0;i<stars1;i++) document.getElementById("stars1").innerHTML+=`<span class="star">⭐</span>`
+  for(let i=0;i<stars2;i++) document.getElementById("stars2").innerHTML+=`<span class="star">⭐</span>`
 
-        async function loadData() {
-            const res = await fetch("/data")
-            const data = await res.json()
-            stars1 = data.stars1
-            stars2 = data.stars2
-            child1 = data.child1
-            child2 = data.child2
-            neededStars = data.neededStars
+  document.getElementById("name1").innerText = child1
+  document.getElementById("name2").innerText = child2
 
-            document.getElementById("neededStars").value = neededStars
-            document.getElementById("child1Input").value = child1
-            document.getElementById("child2Input").value = child2
-            render()
-        }
+  // Barra de progresso
+  const p1 = Math.min(100,(stars1/neededStars)*100)
+  const p2 = Math.min(100,(stars2/neededStars)*100)
+  document.getElementById("progress1").style.width = p1+"%"
+  document.getElementById("progress2").style.width = p2+"%"
 
-        async function saveData() {
-            await fetch("/data", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ child1, child2, stars1, stars2, neededStars })
-            })
-        }
+  // Passeio desbloqueado
+  if(stars1>=neededStars && stars2>=neededStars){
+    document.getElementById("reward").classList.remove("hidden")
+    launchConfetti()
+  } else {
+    document.getElementById("reward").classList.add("hidden")
+  }
+}
 
-        function render() {
-            document.getElementById("stars1").innerHTML = ""
-            document.getElementById("stars2").innerHTML = ""
-            for (let i = 0; i < stars1; i++) document.getElementById("stars1").innerHTML += `<span class="star">⭐</span>`
-            for (let i = 0; i < stars2; i++) document.getElementById("stars2").innerHTML += `<span class="star">⭐</span>`
-            document.getElementById("name1").innerText = child1
-            document.getElementById("name2").innerText = child2
-            if (stars1 >= neededStars && stars2 >= neededStars) {
-                document.getElementById("reward").classList.remove("hidden")
-            } else {
-                document.getElementById("reward").classList.add("hidden")
-            }
-        }
+// --- Funções admin e estrelas ---
+async function addStar(child){
+  if(!isAdmin){
+    alert("Apenas o admin pode adicionar estrelas!")
+    return
+  }
 
-        async function addStar(child) { if (child === 1) stars1++; if (child === 2) stars2++; render(); await saveData() }
-        async function removeStar(child) { if (child === 1 && stars1 > 0) stars1--; if (child === 2 && stars2 > 0) stars2--; render(); await saveData() }
-        async function updateNames() { child1 = document.getElementById("child1Input").value; child2 = document.getElementById("child2Input").value; render(); await saveData() }
-        async function updateGoal() { neededStars = Number(document.getElementById("neededStars").value); await saveData() }
-        async function resetBoard() { stars1 = 0; stars2 = 0; await saveData(); render() }
+  // Limitar ao número máximo de estrelas
+  if(child === 1 && stars1 >= neededStars){
+    return
+  }
+  if(child === 2 && stars2 >= neededStars){
+    return
+  }
 
-        const ADMIN_PASSWORD = "1234"
-        function toggleAdmin() { document.getElementById("adminPanel").classList.toggle("hidden") }
-        function login() { if (document.getElementById("adminPass").value === ADMIN_PASSWORD) { document.getElementById("loginArea").classList.add("hidden"); document.getElementById("controls").classList.remove("hidden") } else { alert("Password errada") } }
+  // Adiciona estrela
+  if(child===1) stars1++
+  if(child===2) stars2++
 
-        loadData()
-    </script>
+  render()
+  await saveData()
+}
 
+async function removeStar(child){
+  if(!isAdmin){alert("Apenas o admin pode remover estrelas!"); return}
+  if(child===1 && stars1>0) stars1--
+  if(child===2 && stars2>0) stars2--
+  render()
+  await saveData()
+}
+
+async function updateNames(){
+  child1 = document.getElementById("child1Input").value
+  child2 = document.getElementById("child2Input").value
+  render()
+  await saveData()
+}
+
+async function updateGoal(){
+  neededStars = Number(document.getElementById("neededStars").value)
+  await saveData()
+}
+
+async function resetBoard(){
+  stars1=0; stars2=0
+  await saveData()
+  render()
+}
+
+// --- Admin login ---
+function toggleAdmin(){document.getElementById("adminPanel").classList.toggle("hidden")}
+function login(){
+  const pass = document.getElementById("adminPass").value
+  if(pass===ADMIN_PASSWORD){
+    document.getElementById("loginArea").classList.add("hidden")
+    document.getElementById("controls").classList.remove("hidden")
+    isAdmin = true
+    // Mostrar botões de + estrela
+    document.querySelectorAll(".admin-only").forEach(b=>b.classList.remove("hidden"))
+  } else {
+    alert("Password errada")
+  }
+}
+
+// --- Confetti ---
+function launchConfetti(){
+  for(let i=0;i<30;i++){
+    const c=document.createElement("div")
+    c.className="confetti"
+    c.style.left=Math.random()*window.innerWidth+"px"
+    c.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`
+    document.body.appendChild(c)
+    setTimeout(()=>c.remove(),1000)
+  }
+}
+
+// --- Inicialização ---
+loadData()
+</script>
 </body>
-
 </html>
