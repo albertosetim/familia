@@ -2,166 +2,163 @@
 <html lang="pt">
 <head>
 <meta charset="UTF-8">
-<title>Quadro de Comportamento - App Mobile</title>
+<title>Quadro de Comportamento - App Fullscreen</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-/* Animação estrelas gigante */
-.star {animation:pop .4s ease; font-size: 3rem;}
-@keyframes pop{0%{transform:scale(.3);opacity:0}80%{transform:scale(1.4)}100%{transform:scale(1);opacity:1}}
+/* Tela cheia, fonte gigante */
+body, html {
+  margin:0; padding:0;
+  height:100%; width:100%;
+  font-family: sans-serif;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:center;
+  background: linear-gradient(to bottom, #3b82f6, #9333ea);
+  color:white;
+}
 
-/* Barra de progresso bem visível */
-#progress-bar {transition: width 0.5s ease;}
-.progress-container {width: 100%; height: 24px; border-radius: 12px; background-color: #e2e8f0; margin-bottom: 16px;}
-.progress-fill {height: 100%; border-radius: 12px; background-color: #34d399; transition: width 0.5s ease;}
+/* Estrelas ultra grandes */
+.star {animation:pop .4s ease; font-size:5rem; margin:0 4px;}
+@keyframes pop{0%{transform:scale(.3);opacity:0}80%{transform:scale(1.5)}100%{transform:scale(1);opacity:1}}
 
-/* Confetti simples */
+/* Barra de progresso gigante */
+.progress-container {width:90%; height:40px; border-radius:20px; background-color:#e2e8f0; margin:16px 0;}
+.progress-fill {height:100%; border-radius:20px; background-color:#34d399; transition:width 0.5s ease;}
+
+/* Botões enormes */
+button {font-size:2.5rem; padding:1rem 2rem; border-radius:1.5rem; margin:8px 0;}
+
+/* Inputs gigantes */
+input {font-size:2rem; padding:1rem; border-radius:1.5rem; width:100%; margin:8px 0;}
+
+/* Confetti grande */
 .confetti {
   position:absolute; pointer-events:none;
-  width:16px; height:16px; border-radius:50%;
+  width:20px; height:20px; border-radius:50%;
   animation:fall 1s linear forwards;
 }
-@keyframes fall {0%{transform:translateY(0)}100%{transform:translateY(300px);opacity:0}}
+@keyframes fall {0%{transform:translateY(0)}100%{transform:translateY(400px);opacity:0}}
 </style>
 </head>
-<body class="bg-gradient-to-b from-blue-300 to-purple-400 min-h-screen flex flex-col items-center p-4 text-center">
+<body>
 
-<h1 class="text-5xl font-extrabold mb-6">⭐ Quadro de Comportamento</h1>
-<p class="mb-6 text-2xl">Ganhem estrelas para merecer o passeio!</p>
+<h1 style="font-size:5rem; margin:16px 0;">⭐ Quadro de Comportamento</h1>
+<p style="font-size:2.5rem; margin-bottom:32px;">Ganhem estrelas para merecer o passeio!</p>
 
-<div class="flex flex-col gap-6 w-full max-w-md">
+<div style="flex:1; width:100%; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:32px;">
 
   <!-- Criança 1 -->
-  <div class="bg-white rounded-3xl shadow-xl p-6 flex flex-col items-center">
-    <h2 id="name1" class="text-4xl font-bold mb-4">Criança 1</h2>
-    <div id="stars1" class="flex justify-center gap-2 mb-4 text-5xl"></div>
+  <div style="background:white; color:black; border-radius:3rem; width:90%; padding:32px; display:flex; flex-direction:column; align-items:center;">
+    <h2 id="name1" style="font-size:4rem; font-weight:bold; margin-bottom:16px;">Criança 1</h2>
+    <div id="stars1" style="display:flex; justify-content:center; gap:16px; font-size:5rem;"></div>
     <div class="progress-container">
       <div id="progress1" class="progress-fill" style="width:0%"></div>
     </div>
-    <button onclick="addStar(1)" class="bg-green-500 hover:bg-green-600 text-white text-3xl px-6 py-4 rounded-3xl admin-only hidden w-full">+ ⭐</button>
+    <button onclick="addStar(1)" class="admin-only hidden" style="background:#10b981; color:white;">+ ⭐</button>
   </div>
 
   <!-- Criança 2 -->
-  <div class="bg-white rounded-3xl shadow-xl p-6 flex flex-col items-center">
-    <h2 id="name2" class="text-4xl font-bold mb-4">Criança 2</h2>
-    <div id="stars2" class="flex justify-center gap-2 mb-4 text-5xl"></div>
+  <div style="background:white; color:black; border-radius:3rem; width:90%; padding:32px; display:flex; flex-direction:column; align-items:center;">
+    <h2 id="name2" style="font-size:4rem; font-weight:bold; margin-bottom:16px;">Criança 2</h2>
+    <div id="stars2" style="display:flex; justify-content:center; gap:16px; font-size:5rem;"></div>
     <div class="progress-container">
       <div id="progress2" class="progress-fill" style="width:0%"></div>
     </div>
-    <button onclick="addStar(2)" class="bg-green-500 hover:bg-green-600 text-white text-3xl px-6 py-4 rounded-3xl admin-only hidden w-full">+ ⭐</button>
+    <button onclick="addStar(2)" class="admin-only hidden" style="background:#10b981; color:white;">+ ⭐</button>
   </div>
 
 </div>
 
-<div id="reward" class="hidden mt-8 text-4xl font-extrabold text-yellow-500">🎉 Passeio desbloqueado!</div>
+<div id="reward" style="display:none; font-size:5rem; font-weight:bold; color:yellow; margin:32px 0;">🎉 Passeio desbloqueado!</div>
 
-<button onclick="toggleAdmin()" class="mt-6 text-2xl text-gray-800 underline">Admin</button>
+<button onclick="toggleAdmin()" style="font-size:2rem; color:white; text-decoration:underline; margin-bottom:16px;">Admin</button>
 
-<div id="adminPanel" class="hidden mt-4 bg-white p-6 rounded-3xl shadow w-full max-w-md mx-auto">
-
-  <h3 class="text-3xl font-bold mb-4">Admin</h3>
-
+<div id="adminPanel" style="display:none; background:white; color:black; padding:32px; border-radius:3rem; width:90%; margin-bottom:32px;">
   <div id="loginArea">
-    <input id="adminPass" type="password" placeholder="Password" class="border p-4 w-full mb-4 rounded-2xl text-2xl">
-    <button onclick="login()" class="bg-blue-500 text-white px-6 py-4 rounded-2xl w-full text-2xl">Login</button>
+    <input id="adminPass" type="password" placeholder="Password">
+    <button onclick="login()" style="background:#3b82f6; color:white;">Login</button>
   </div>
 
-  <div id="controls" class="hidden">
-    <label class="text-2xl mb-1 block">Nome Criança 1</label>
-    <input id="child1Input" type="text" class="border p-4 w-full mb-3 rounded-2xl text-2xl">
-
-    <label class="text-2xl mb-1 block">Nome Criança 2</label>
-    <input id="child2Input" type="text" class="border p-4 w-full mb-3 rounded-2xl text-2xl">
-
-    <button onclick="updateNames()" class="bg-indigo-500 text-white px-6 py-4 rounded-2xl w-full mb-3 text-2xl">Atualizar nomes</button>
-
-    <div class="flex flex-col gap-3 mb-3">
-      <button onclick="removeStar(1)" class="bg-red-400 text-white px-6 py-4 rounded-2xl text-2xl w-full">- ⭐ Criança 1</button>
-      <button onclick="removeStar(2)" class="bg-red-400 text-white px-6 py-4 rounded-2xl text-2xl w-full">- ⭐ Criança 2</button>
-    </div>
-
-    <label class="text-2xl mb-1 block">Estrelas para passeio</label>
-    <input id="neededStars" type="number" class="border p-4 w-full mb-3 rounded-2xl text-2xl">
-    <button onclick="updateGoal()" class="bg-purple-500 text-white px-6 py-4 rounded-2xl w-full mb-3 text-2xl">Atualizar objetivo</button>
-
-    <button onclick="resetBoard()" class="bg-red-600 text-white px-6 py-4 rounded-2xl w-full mb-2 text-2xl">Reset semana</button>
-    <button onclick="logout()" class="bg-gray-600 text-white px-6 py-4 rounded-2xl w-full text-2xl">Logout</button>
+  <div id="controls" style="display:none;">
+    <label style="font-size:2rem;">Nome Criança 1</label>
+    <input id="child1Input" type="text">
+    <label style="font-size:2rem;">Nome Criança 2</label>
+    <input id="child2Input" type="text">
+    <button onclick="updateNames()" style="background:#6366f1; color:white;">Atualizar nomes</button>
+    <button onclick="removeStar(1)" style="background:#ef4444; color:white;">- ⭐ Criança 1</button>
+    <button onclick="removeStar(2)" style="background:#ef4444; color:white;">- ⭐ Criança 2</button>
+    <label style="font-size:2rem;">Estrelas para passeio</label>
+    <input id="neededStars" type="number">
+    <button onclick="updateGoal()" style="background:#8b5cf6; color:white;">Atualizar objetivo</button>
+    <button onclick="resetBoard()" style="background:#b91c1c; color:white;">Reset semana</button>
+    <button onclick="logout()" style="background:#4b5563; color:white;">Logout</button>
   </div>
 </div>
 
 <script>
-let stars1, stars2, child1, child2, neededStars
-let isAdmin = false
-const ADMIN_PASSWORD = "1234"
+let stars1, stars2, child1, child2, neededStars;
+let isAdmin = false;
+const ADMIN_PASSWORD = "1234";
 
-// --- Backend ---
 async function loadData(){
-  const res = await fetch("/data")
-  const data = await res.json()
-  stars1 = data.stars1
-  stars2 = data.stars2
-  child1 = data.child1
-  child2 = data.child2
-  neededStars = data.neededStars
-  document.getElementById("neededStars").value = neededStars
-  document.getElementById("child1Input").value = child1
-  document.getElementById("child2Input").value = child2
-  render()
+  const res = await fetch("/data");
+  const data = await res.json();
+  stars1 = data.stars1;
+  stars2 = data.stars2;
+  child1 = data.child1;
+  child2 = data.child2;
+  neededStars = data.neededStars;
+  document.getElementById("neededStars").value = neededStars;
+  document.getElementById("child1Input").value = child1;
+  document.getElementById("child2Input").value = child2;
+  render();
 }
 
 async function saveData(){
-  await fetch("/data",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({child1, child2, stars1, stars2, neededStars})
-  })
+  await fetch("/data",{method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({child1, child2, stars1, stars2, neededStars})});
 }
 
-// --- Render ---
 function render(){
-  document.getElementById("stars1").innerHTML=""
-  document.getElementById("stars2").innerHTML=""
-  for(let i=0;i<stars1;i++) document.getElementById("stars1").innerHTML+=`<span class="star">⭐</span>`
-  for(let i=0;i<stars2;i++) document.getElementById("stars2").innerHTML+=`<span class="star">⭐</span>`
-  document.getElementById("name1").innerText = child1
-  document.getElementById("name2").innerText = child2
-  const p1 = Math.min(100,(stars1/neededStars)*100)
-  const p2 = Math.min(100,(stars2/neededStars)*100)
-  document.getElementById("progress1").style.width = p1+"%"
-  document.getElementById("progress2").style.width = p2+"%"
-  if(stars1>=neededStars && stars2>=neededStars){ document.getElementById("reward").classList.remove("hidden"); launchConfetti() } 
-  else { document.getElementById("reward").classList.add("hidden") }
+  document.getElementById("stars1").innerHTML="";
+  document.getElementById("stars2").innerHTML="";
+  for(let i=0;i<stars1;i++) document.getElementById("stars1").innerHTML+=`<span class="star">⭐</span>`;
+  for(let i=0;i<stars2;i++) document.getElementById("stars2").innerHTML+=`<span class="star">⭐</span>`;
+  document.getElementById("name1").innerText = child1;
+  document.getElementById("name2").innerText = child2;
+  document.getElementById("progress1").style.width = Math.min(100,(stars1/neededStars)*100)+"%";
+  document.getElementById("progress2").style.width = Math.min(100,(stars2/neededStars)*100)+"%";
+  if(stars1>=neededStars && stars2>=neededStars){document.getElementById("reward").style.display="block"; launchConfetti()} 
+  else {document.getElementById("reward").style.display="none";}
 }
 
-// --- Admin ---
 async function addStar(child){
-  if(!isAdmin){alert("Apenas admin!"); return}
-  if(child===1 && stars1>=neededStars){alert(child1+" já atingiu o limite!"); return}
-  if(child===2 && stars2>=neededStars){alert(child2+" já atingiu o limite!"); return}
-  if(child===1) stars1++
-  if(child===2) stars2++
-  render(); await saveData()
+  if(!isAdmin){alert("Apenas admin!"); return;}
+  if(child===1 && stars1>=neededStars){alert(child1+" já atingiu o limite!"); return;}
+  if(child===2 && stars2>=neededStars){alert(child2+" já atingiu o limite!"); return;}
+  if(child===1) stars1++;
+  if(child===2) stars2++;
+  render(); await saveData();
 }
 
 async function removeStar(child){
-  if(!isAdmin){alert("Apenas admin!"); return}
-  if(child===1 && stars1>0) stars1--
-  if(child===2 && stars2>0) stars2--
-  render(); await saveData()
+  if(!isAdmin){alert("Apenas admin!"); return;}
+  if(child===1 && stars1>0) stars1--;
+  if(child===2 && stars2>0) stars2--;
+  render(); await saveData();
 }
 
-async function updateNames(){child1=document.getElementById("child1Input").value; child2=document.getElementById("child2Input").value; render(); await saveData()}
-async function updateGoal(){neededStars=Number(document.getElementById("neededStars").value); await saveData()}
-async function resetBoard(){stars1=0; stars2=0; await saveData(); render()}
+async function updateNames(){child1=document.getElementById("child1Input").value; child2=document.getElementById("child2Input").value; render(); await saveData();}
+async function updateGoal(){neededStars=Number(document.getElementById("neededStars").value); await saveData();}
+async function resetBoard(){stars1=0; stars2=0; await saveData(); render();}
 
-function toggleAdmin(){document.getElementById("adminPanel").classList.toggle("hidden")}
-function login(){const pass=document.getElementById("adminPass").value; if(pass===ADMIN_PASSWORD){document.getElementById("loginArea").classList.add("hidden"); document.getElementById("controls").classList.remove("hidden"); isAdmin=true; document.querySelectorAll(".admin-only").forEach(b=>b.classList.remove("hidden"))} else alert("Password errada")}
-function logout(){document.getElementById("controls").classList.add("hidden"); document.getElementById("loginArea").classList.remove("hidden"); document.querySelectorAll(".admin-only").forEach(b=>b.classList.add("hidden")); isAdmin=false; document.getElementById("adminPass").value=""}
+function toggleAdmin(){document.getElementById("adminPanel").style.display=document.getElementById("adminPanel").style.display==="none"?"block":"none";}
+function login(){const pass=document.getElementById("adminPass").value; if(pass===ADMIN_PASSWORD){document.getElementById("loginArea").style.display="none"; document.getElementById("controls").style.display="block"; isAdmin=true; document.querySelectorAll(".admin-only").forEach(b=>b.style.display="block")} else alert("Password errada");}
+function logout(){document.getElementById("controls").style.display="none"; document.getElementById("loginArea").style.display="block"; document.querySelectorAll(".admin-only").forEach(b=>b.style.display="none"); isAdmin=false; document.getElementById("adminPass").value="";}
 
-// --- Confetti ---
-function launchConfetti(){for(let i=0;i<40;i++){const c=document.createElement("div"); c.className="confetti"; c.style.left=Math.random()*window.innerWidth+"px"; c.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`; document.body.appendChild(c); setTimeout(()=>c.remove(),1000)}}
+function launchConfetti(){for(let i=0;i<50;i++){const c=document.createElement("div"); c.className="confetti"; c.style.left=Math.random()*window.innerWidth+"px"; c.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`; document.body.appendChild(c); setTimeout(()=>c.remove(),1200)}}
 
-// --- Inicialização ---
-loadData()
+loadData();
 </script>
 </body>
 </html>
